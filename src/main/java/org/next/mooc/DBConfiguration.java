@@ -18,6 +18,12 @@ public class DBConfiguration {
 	@Value("${nclavis.db-connection-info.request-hash-key}")
 	private String symkey1;
 	
+	/**
+	 * https://yobi.navercorp.com/nClavis 참조
+	 * 
+	 * @return
+	 * @throws Exception
+	 */
 	@Bean
 	public DataSource datasource() throws Exception {
 		NClavisAuthInfo authInfo = new NClavisAuthInfo()
