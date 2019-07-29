@@ -14,7 +14,7 @@ import com.nhncorp.lucy.nclavis.https.message.NClavisHttpsResponse;
 import com.nhncorp.lucy.nclavis.model.DBConnectionInfo;
 
 @Configuration
-public class DbConfiguration {
+public class DBConfiguration {
 	@Value("${nclavis.db-connection-info.request-hash-key}")
 	private String symkey1;
 	
@@ -37,7 +37,7 @@ public class DbConfiguration {
 	        dataSourceBuilder.driverClassName("cubrid.jdbc.driver.CUBRIDDriver");
 	        return (DataSource) dataSourceBuilder.build();
 		} else {
-			return null;
+			throw new RuntimeException("nclavis call error!!");
 		}
 	}
 }
