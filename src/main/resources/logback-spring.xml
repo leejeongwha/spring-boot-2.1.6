@@ -41,7 +41,7 @@
 			<appender-ref ref="ConsoleAppender"/>
 		</logger>
 	
-		<root level="INFO">
+		<root level="DEBUG">
 			<appender-ref ref="ConsoleAppender"/>
 		</root>
     </springProfile>

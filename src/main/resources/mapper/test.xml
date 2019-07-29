@@ -4,7 +4,7 @@
     <select id="selectAll" resultType="org.next.mooc.model.AAA">
         SELECT
         	id
-        	,cont
-        FROM AAA
+        	,locale as cont
+        FROM device
     </select>
 </mapper>

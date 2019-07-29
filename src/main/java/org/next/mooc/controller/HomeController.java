@@ -17,7 +17,7 @@ public class HomeController {
 	private TestService testService;
 	
 	@GetMapping("/home")
-	public String home() {
+	public String home() throws Exception {
 		log.info("home");
 		return "home";
 	}
