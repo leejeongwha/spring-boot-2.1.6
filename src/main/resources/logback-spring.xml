@@ -6,13 +6,12 @@
 		</encoder>
 	</appender>
 	
-	<logger name="jdbc" additivity="false" level="OFF"/>
-    <logger name="jdbc.sqltiming" additivity="false" level="OFF"/>
-    <logger name="jdbc.audit" additivity="false" level="OFF"/>
-    <logger name="jdbc.resultset" additivity="false" level="OFF"/>
-    <logger name="jdbc.resultsettable" additivity="false" level="OFF"/>
-    <logger name="jdbc.connection" additivity="false" level="OFF"/>
+	<!-- MyBatis의 Mapper.xml에 선언된 namespace명을 넣어주면 해당 쿼리가 로그에 남는다. -->
+    <!-- ex> namespase가 "org.next.mooc.repository.MainRepository" 인 경우 org.next.mooc.repository만 넣어주어도 됨 -->
+    <logger name="org.next.mooc.repository" level="DEBUG"></logger>
+	<logger name="org.springframework.http.client.support" level="DEBUG" />
     
+    <!-- 서버 환경 -->
     <springProfile name="dev,alpha,beta,release">
     	<appender name="FileAppender" class="ch.qos.logback.core.rolling.RollingFileAppender">
 			<File>/home1/irteam/logs/tomcat/mooc.api.log</File>
@@ -24,11 +23,6 @@
 			</encoder>
 		</appender>
 	
-    	<logger name="jdbc.sqlonly" additivity="false">
-			<level value="INFO" />
-			<appender-ref ref="FileAppender"/>
-		</logger>
-	
 		<root level="INFO">
 			<appender-ref ref="FileAppender"/>
 		</root>
@@ -36,11 +30,6 @@
     
     <!-- local 환경 -->
     <springProfile name="default">
-		<logger name="jdbc.sqlonly" additivity="false">
-			<level value="INFO" />
-			<appender-ref ref="ConsoleAppender"/>
-		</logger>
-	
 		<root level="DEBUG">
 			<appender-ref ref="ConsoleAppender"/>
 		</root>
