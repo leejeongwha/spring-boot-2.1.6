@@ -16,7 +16,7 @@ public class MainController {
 	@Autowired
 	private MainService mainService;
 	
-	@GetMapping("/home")
+	@GetMapping(value= {"/", "home"})
 	public String home() throws Exception {
 		log.info("home");
 		return "home";
