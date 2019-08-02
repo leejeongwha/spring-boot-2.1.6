@@ -2,8 +2,8 @@ package org.next.mooc.controller;
 
 import java.util.List;
 
-import org.next.mooc.model.AAA;
-import org.next.mooc.service.TestService;
+import org.next.mooc.model.MainKeyVisual;
+import org.next.mooc.service.MainService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -12,9 +12,9 @@ import lombok.extern.slf4j.Slf4j;
 
 @RestController
 @Slf4j
-public class HomeController {
+public class MainController {
 	@Autowired
-	private TestService testService;
+	private MainService mainService;
 	
 	@GetMapping("/home")
 	public String home() throws Exception {
@@ -22,8 +22,8 @@ public class HomeController {
 		return "home";
 	}
 	
-	@GetMapping("/aaa")
-	public List<AAA> aaa() {
-		return testService.getTestAll();
+	@GetMapping("/main")
+	public List<MainKeyVisual> main() {
+		return mainService.getMainKeyVisualList("NEXT");
 	}
 }

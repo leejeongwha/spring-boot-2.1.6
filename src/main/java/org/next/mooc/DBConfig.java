@@ -14,7 +14,7 @@ import com.nhncorp.lucy.nclavis.https.message.NClavisHttpsResponse;
 import com.nhncorp.lucy.nclavis.model.DBConnectionInfo;
 
 @Configuration
-public class DBConfiguration {
+public class DBConfig {
 	@Value("${nclavis.db-connection-info.request-hash-key}")
 	private String symkey1;
 	

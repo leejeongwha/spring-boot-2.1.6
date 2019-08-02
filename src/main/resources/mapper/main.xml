@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.next.mooc.repository.MainRepository">
+    <select id="selectMainKeyVisualList" parameterType="String" resultType="org.next.mooc.model.MainKeyVisual">
+        SELECT
+	        id
+	        ,title
+	        ,content_type
+	        ,type_id
+	        ,exposure_type
+	        ,image_url
+	        ,IF(is_blank = 'Y', TRUE, FALSE) is_blank
+	        ,IF(is_exposure = 'Y', TRUE, FALSE) is_exposure
+	        ,link_url
+	        ,order_num
+	        ,exposure_strt_ymdt
+	        ,exposure_end_ymdt
+        FROM main_key_visual
+        WHERE partner_code = #{partnerCode}
+        AND is_exposure = 'Y'
+        AND exposure_type = 'MOBILE'
+        AND (exposure_strt_ymdt IS NULL OR (exposure_strt_ymdt &lt;= SYSDATETIME AND exposure_end_ymdt &gt;= SYSDATETIME))
+        ORDER BY order_num
+    </select>
+</mapper>
