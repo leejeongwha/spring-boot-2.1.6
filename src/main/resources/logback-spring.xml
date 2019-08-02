@@ -35,7 +35,7 @@
     </springProfile>
     
     <!-- local 환경 -->
-    <springProfile name="!dev,!alpha,!beta,!release">
+    <springProfile name="default">
 		<logger name="jdbc.sqlonly" additivity="false">
 			<level value="INFO" />
 			<appender-ref ref="ConsoleAppender"/>
