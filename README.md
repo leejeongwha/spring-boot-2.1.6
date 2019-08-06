@@ -7,5 +7,5 @@ edwith spring-boot java project
 
 ## FUNC
 - nclavis  
-- cubrid  
+- cors
 - ehcache3  
