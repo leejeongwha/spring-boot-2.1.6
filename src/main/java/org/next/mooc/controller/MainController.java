@@ -5,6 +5,7 @@ import java.util.List;
 import org.next.mooc.model.MainKeyVisual;
 import org.next.mooc.service.MainService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -22,6 +23,7 @@ public class MainController {
 		return "home";
 	}
 	
+	@CrossOrigin
 	@GetMapping("/main")
 	public List<MainKeyVisual> main() {
 		return mainService.getMainKeyVisualList("NEXT");
