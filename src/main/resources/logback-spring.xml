@@ -8,7 +8,7 @@
 	
 	<!-- MyBatis의 Mapper.xml에 선언된 namespace명을 넣어주면 해당 쿼리가 로그에 남는다. -->
     <!-- ex> namespase가 "org.next.mooc.repository.MainRepository" 인 경우 org.next.mooc.repository만 넣어주어도 됨 -->
-    <logger name="org.next.mooc.repository" level="DEBUG"></logger>
+    <logger name="org.next.mooc.main.repository" level="DEBUG"></logger>
 	<logger name="org.springframework.http.client.support" level="DEBUG" />
     
     <!-- 서버 환경 -->

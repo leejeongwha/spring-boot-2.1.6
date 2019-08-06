@@ -1,4 +1,4 @@
-package org.next.mooc.model;
+package org.next.mooc.main.model;
 
 import java.io.Serializable;
 import java.util.Date;

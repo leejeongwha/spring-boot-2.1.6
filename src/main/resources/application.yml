@@ -4,6 +4,9 @@ spring:
       config: classpath:config/ehcache.xml
   profiles:
     active: default
+  jackson:
+    serialization:
+      indent_output: true
     
 mybatis:
   mapper-locations: mapper/**/*.xml

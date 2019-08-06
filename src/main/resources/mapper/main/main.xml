@@ -1,0 +1,130 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.next.mooc.main.repository.MainRepository">
+    <select id="selectMainKeyVisualList" parameterType="String" resultType="org.next.mooc.main.model.MainKeyVisual">
+        SELECT
+	        id
+	        ,title
+	        ,content_type
+	        ,type_id
+	        ,exposure_type
+	        ,image_url
+	        ,IF(is_blank = 'Y', TRUE, FALSE) is_blank
+	        ,IF(is_exposure = 'Y', TRUE, FALSE) is_exposure
+	        ,link_url
+	        ,order_num
+	        ,exposure_strt_ymdt
+	        ,exposure_end_ymdt
+        FROM main_key_visual
+        WHERE partner_code = #{partnerCode}
+        AND is_exposure = 'Y'
+        AND exposure_type = 'MOBILE'
+        AND (exposure_strt_ymdt IS NULL OR (exposure_strt_ymdt &lt;= SYSDATETIME AND exposure_end_ymdt &gt;= SYSDATETIME))
+        ORDER BY order_num
+    </select>
+    
+    <select id="selectMainManualCurationList" parameterType="String" resultType="org.next.mooc.main.model.MainManualCuration">
+        SELECT
+            g.id AS groupId
+            , g.title AS title
+            , gc.id AS cont_id
+            , gc.type AS cont_type
+            , gc.course_id AS cont_courseId
+            , gc.lecture_id AS cont_lectureId
+            , CASE WHEN gc.type = 'TITLEBOX' THEN gc.title ELSE (CASE WHEN l.id IS NULL THEN c.name ELSE l.title END) END AS cont_title
+            , gc.description AS cont_description
+            , CASE WHEN (gc.image_url IS NULL OR gc.image_url = '') THEN c.intro_image_url ELSE gc.image_url END AS cont_imageUrl
+            , gc.link_url AS cont_linkUrl
+            , TO_CHAR(c.open_day, 'YYYY.MM.DD') AS cont_openDay
+            , TO_CHAR(c.end_day, 'YYYY.MM.DD') AS cont_endDay
+            , IF(gc.is_blank = 'Y', TRUE, FALSE) AS cont_isBlank
+            , f.prof_name AS cont_profName
+            , p.name AS cont_partnerName
+            , CASE WHEN l.id IS NULL THEN NVL(c.vote_count, 0) ELSE NVL(l.vote_count, 0) END AS cont_voteCount
+        FROM main_manual_curation_group g, main_manual_curation_content gc, course c, lecture l, professor_info f, partner p
+        WHERE g.partner_code = #{partnerCode}
+        AND ((g.is_exposed = 'Y' AND g.is_period = 'N') OR (g.is_exposed = 'Y' AND g.expose_start_ymdt &lt;= SYSDATETIME AND SYSDATETIME &lt;= g.expose_end_ymdt))
+        AND g.is_pc = 'Y'
+        AND g.id = gc.main_manual_curation_group_id
+        AND gc.course_id = c.id(+)
+        AND gc.lecture_id = l.id(+)
+        AND c.id = f.course_id(+)
+        AND f.master_professor(+) = 'Y'
+        AND c.partner_code = p.partner_code(+)
+        ORDER BY g.order_num DESC, gc.order_num
+    </select>
+    
+    <select id="selectMainAutoCurationList" parameterType="String" resultType="org.next.mooc.main.model.MainAutoCuration">
+    	SELECT
+            la.id AS id
+            , la.type AS type
+            , la.title AS title
+            , co.id AS cont_id
+            , co.type AS cont_type
+            , c.intro_image_url AS cont_imageUrl
+            , co.link_url AS cont_linkUrl
+            , co.title AS cont_tagTitle
+            , c.name AS cont_courseTitle
+            , l.title AS cont_lectureTitle
+            , TO_CHAR(c.open_day, 'YYYY.MM.DD') AS cont_openDay
+            , TO_CHAR(c.end_day, 'YYYY.MM.DD') AS cont_endDay
+            , f.prof_name AS cont_profName
+            , p.name AS cont_partnerName
+        FROM main_auto_curation_layout la, main_auto_curation_content co
+        , course c, lecture l, professor_info f, partner p
+        WHERE la.id = co.main_auto_curation_layout_id
+        AND la.partner_code = #{partnerCode}
+        AND co.course_id = c.id(+)
+        AND co.lecture_id = l.id(+)
+        AND co.is_exposed = 'Y'
+        AND c.partner_code = p.partner_code(+)
+        AND c.id = f.course_id(+)
+        AND la.is_exposed = 'Y' AND expose_start_ymdt &lt;= SYSDATETIME AND SYSDATETIME &lt;= expose_end_ymdt
+        AND f.master_professor(+) = 'Y'
+        ORDER BY la.type, co.order_num
+    </select>
+    
+    <select id="selectMainNewsBlogList" parameterType="String" resultType="org.next.mooc.main.model.MainNewsBlog">
+    	SELECT
+	        id
+	        ,title
+	        ,image_url
+	        ,IF(is_blank = 'Y', TRUE, FALSE) is_blank
+	        ,IF(is_exposure = 'Y', TRUE, FALSE) is_exposure
+	        ,link_url
+	        ,order_num
+	        ,exposure_strt_ymdt
+	        ,exposure_end_ymdt
+        FROM main_news_blog
+        WHERE partner_code = #{partnerCode}
+        AND is_exposure = 'Y'
+        AND (exposure_strt_ymdt IS NULL OR (exposure_strt_ymdt &lt;= SYSDATETIME AND exposure_end_ymdt &gt;= SYSDATETIME))
+        ORDER BY order_num
+        LIMIT 6
+    </select>
+    
+    <select id="selectMainTimeLineList" parameterType="String" resultType="org.next.mooc.main.model.MainTimeLine">
+    	SELECT
+	        mtl.id AS id
+	        ,mtl.title AS title
+	        ,DECODE(mtl.is_exposure, 'Y', TRUE, FALSE) AS  isExposure
+	        ,DECODE(mtl.is_deleted, 'Y', TRUE, FALSE) AS  isDeleted
+	        ,mtl.mod_ymdt AS modYmdt
+	        ,mtlc.id AS cont_id
+	        ,mtlc.content AS cont_content
+	        ,mtlc.writer_name AS cont_writerName
+	        ,mtlc.course_name AS cont_courseName
+	        ,mtlc.content_title AS cont_contentTitle
+	        ,mtlc.content_type AS cont_contentType
+	        ,mtlc.content_url AS cont_contentUrl
+	        ,TO_CHAR(mtlc.write_ymdt, 'YYYY.MM.DD HH24:MI:SS') AS cont_writeYmdt
+	        ,mtlc.order_num AS cont_orderNum
+	        ,DECODE(mtlc.is_exposure, 'Y', TRUE, FALSE) AS  cont_isExposure
+        FROM main_time_line mtl, main_time_line_content mtlc
+        WHERE mtl.id = mtlc.main_time_line_id(+)
+        AND mtl.is_exposure = 'Y'
+        AND mtl.is_deleted = 'N'
+        AND partner_code = #{partnerCode}
+        ORDER BY mtlc.order_num
+    </select>
+</mapper>
