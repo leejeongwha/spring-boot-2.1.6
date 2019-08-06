@@ -7,13 +7,13 @@ import lombok.Data;
 @Data
 public class MainManualCuration implements Serializable {
 	private static final long serialVersionUID = 1L;
-	
+
 	private Long groupId;
 	private String title;
 	private Long contId;
-	private String cont_type;
-	private Long cont_courseId;
-	private Long cont_lectureId;
+	private String contType;
+	private Long contCourseId;
+	private Long contLectureId;
 	private String contTitle;
 	private String contDescription;
 	private String contImageUrl;
