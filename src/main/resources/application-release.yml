@@ -1,6 +1,6 @@
 spring:
   datasource:
     driver-class-name: net.sf.log4jdbc.sql.jdbcapi.DriverSpy
-    url: jdbc:log4jdbc:mysql://db-1n3h1.pub-cdb.ntruss.com:3306/scloud
-    username: spacecloud
-    password: spaceCloud_1!
+    url: jdbc:log4jdbc:mysql://testdb:3306/scloud
+    username: testdb
+    password: testdb
