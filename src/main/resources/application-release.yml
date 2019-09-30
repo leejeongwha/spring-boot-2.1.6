@@ -1,6 +1,0 @@
-spring:
-  datasource:
-    driver-class-name: net.sf.log4jdbc.sql.jdbcapi.DriverSpy
-    url: jdbc:log4jdbc:mysql://testdb:3306/scloud
-    username: testdb
-    password: testdb

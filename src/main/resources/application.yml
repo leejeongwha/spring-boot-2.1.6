@@ -7,8 +7,7 @@ spring:
   jackson:
     serialization:
       indent_output: true
-    
-mybatis:
-  mapper-locations: mapper/**/*.xml
-  configuration:
-    map-underscore-to-camel-case: true
+
+server:
+  tomcat:
+    max-threads: 2

@@ -30,7 +30,7 @@
     
     <!-- local 환경 -->
     <springProfile name="default">
-		<root level="DEBUG">
+		<root level="INFO">
 			<appender-ref ref="ConsoleAppender"/>
 		</root>
     </springProfile>
