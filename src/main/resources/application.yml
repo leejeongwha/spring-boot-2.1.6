@@ -7,7 +7,12 @@ spring:
   jackson:
     serialization:
       indent_output: true
+  task:
+    execution:
+      pool:
+        core-size: 8
+        max-size: 8
 
 server:
   tomcat:
-    max-threads: 2
+    max-threads: 200
